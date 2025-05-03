@@ -1,9 +1,12 @@
 name: Build Android APK
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -11,23 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.19.0'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Build APK
-      run: flutter build apk --release
+      - name: Build APK
+        run: flutter build apk --release
 
-    - name: Upload APK
-      uses: actions/upload-artifact@e2a7e3c6c2fd9e34e03cf9a7f5ec85cb092b7c1c  # v3.1.2 SHA
-      with:
-        name: DJI-Mapper-APK
-        path: build/app/outputs/flutter-apk/app-release.apk
-
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DJI-Mapper-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
