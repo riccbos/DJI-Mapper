@@ -31,5 +31,5 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v3
         with:
-          name: DJI-Mapper-APK
+          name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
